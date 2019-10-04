@@ -1,9 +1,22 @@
 const express = require('express');
+const multer = require('multer');
+const uploadConfig = require('./config/upload');
+
+const SessionController = require('./controllers/SessionController');
+const DashboardController = require('./controllers/DashboardController');
+const SpotController = require('./controllers/SpotController');
 
 const routes = express.Router();
+const upload = multer(uploadConfig);
 
-routes.get('/', (req, res) => {
-  return res.json({ message: "Hello Omnistack" });
-});
+// Session's routes
+routes.post('/sessions', SessionController.store);
+
+// Spot's routes
+routes.get('/spots', SpotController.index);
+routes.post('/spots', upload.single('thumbnail'), SpotController.store);
+
+// Dashboard's routes
+routes.get('/dashboard', DashboardController.show);
 
 module.exports = routes;
