@@ -2,7 +2,7 @@ const User = require('../models/User');
 const Spot = require('../models/Spot');
 
 module.exports = {
-  async index(req,res) {
+  async index(req, res) {
     const { tech } = req.query;
 
     const spots = await Spot.find({ techs: tech });
@@ -18,7 +18,7 @@ module.exports = {
     const user = await User.findById(user_id);
 
     if (!user) {
-      return res.status(400).json({ error: 'User doesn\'t exit' });
+      return res.status(400).json({ error: "User doesn't exit" });
     }
 
     const spot = await Spot.create({
@@ -26,9 +26,9 @@ module.exports = {
       thumbnail: filename,
       company,
       techs: techs.split(',').map(tech => tech.trim()),
-      price
-    })
+      price,
+    });
 
     return res.json(spot);
-  }
+  },
 };
